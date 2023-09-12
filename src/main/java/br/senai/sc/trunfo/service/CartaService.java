@@ -21,9 +21,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CartaService {
 
-
     private CartaRepository cartaRepository;
-
 
     public Carta create(Carta carta) {
         return cartaRepository.save(carta);
