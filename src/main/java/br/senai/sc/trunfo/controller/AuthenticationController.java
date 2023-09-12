@@ -1,6 +1,7 @@
 package br.senai.sc.trunfo.controller;
 
 import br.senai.sc.trunfo.infra.security.TokenService;
+import br.senai.sc.trunfo.infra.security.model.Usuario;
 import br.senai.sc.trunfo.infra.security.util.CookieUtil;
 import br.senai.sc.trunfo.model.dto.AuthenticationDTO;
 import br.senai.sc.trunfo.model.dto.JogadorDTO;
@@ -42,19 +43,20 @@ public class AuthenticationController {
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO,
                                         HttpServletRequest request,
                                         HttpServletResponse response) {
-        System.out.println(authenticationDTO);
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken
                 (authenticationDTO.login(),
                         authenticationDTO.password());
 
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
-
+        System.out.println(auth.isAuthenticated());
         if (auth.isAuthenticated()) {
-            Cookie cookie = CookieUtil.gerarCookie((Jogador) auth.getPrincipal());
+            Usuario usuario = (Usuario)auth.getPrincipal();
+            Cookie cookie = CookieUtil.gerarCookie(usuario.getJogador());
             response.addCookie(cookie);
             System.out.println(cookie);
             return ResponseEntity.ok(auth.getPrincipal());
         }
+        System.out.println("Falha");
 
         return ResponseEntity.status(401).build();
     }

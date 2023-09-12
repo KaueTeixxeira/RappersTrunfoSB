@@ -31,7 +31,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(request.getRequestURI());
         if (!rotaPublica(request.getRequestURI())) {
             try {
                 String token = CookieUtil.getToken(request);
@@ -40,8 +39,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                 response.addCookie(CookieUtil.gerarCookie(jogador));
 
                 Authentication authentication =
-                        new UsernamePasswordAuthenticationToken(jogador.getUsername(), null, jogador.getAuthorities());
-
+                        new UsernamePasswordAuthenticationToken(jogador.getNome(), null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             } catch (JWTDecodeException exception) {
