@@ -22,8 +22,6 @@ public class Jogador {
     @Column(unique = true)
     private String nome;
 
-    @NotNull
-    private String senha;
     private Integer numVitoria, numDerrota;
 
 }

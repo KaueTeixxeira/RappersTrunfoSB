@@ -2,6 +2,7 @@ package br.senai.sc.trunfo.controller;
 
 import br.senai.sc.trunfo.infra.security.TokenService;
 import br.senai.sc.trunfo.infra.security.model.Usuario;
+import br.senai.sc.trunfo.infra.security.repository.UsuarioRepository;
 import br.senai.sc.trunfo.infra.security.util.CookieUtil;
 import br.senai.sc.trunfo.model.dto.AuthenticationDTO;
 import br.senai.sc.trunfo.model.dto.JogadorDTO;
@@ -39,10 +40,14 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO authenticationDTO,
                                         HttpServletRequest request,
                                         HttpServletResponse response) {
+        System.out.println("Im here");
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken
                 (authenticationDTO.login(),
                         authenticationDTO.password());
@@ -70,6 +75,8 @@ public class AuthenticationController {
         Jogador jogador = new Jogador();
         BeanUtils.copyProperties(jogadorDTO,jogador);
         jogadorRepository.save(jogador);
+        Usuario usuario = new Usuario(jogador, encrypPasswd);
+        usuarioRepository.save(usuario);
         return ResponseEntity.ok().build();
     }
 
