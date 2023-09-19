@@ -1,5 +1,5 @@
 
-<h1 align="center">Rappers Trufo</h1>
+<h1 align="center">Rappers Trunfo</h1>
 <h2>Description</h2>
 <p style="text-align: justify;">
 Trunfo (also known as Trumps, Top Trumps, or Super Trumps) is a card game that originated in the UK in the 1960s. The game consists of a deck of cards, each featuring a different theme such as cars, animals, or sports. Each card has several categories, such as speed, power, or weight, along with a numerical value for each category.
